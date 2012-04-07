@@ -19,8 +19,8 @@ INCLUDES = -Ideps/libuv/include -Isrc
 AM_CPPFLAGS = `pkg-config guile-2.0 --cflags`
 LIBS = `pkg-config guile-2.0 --libs` deps/libuv/uv.a -lm -ldl -lrt -pthread
 
-mo_DEPENDENCIES = deps/libuv/.git
+#mo_DEPENDENCIES = deps/libuv/.git
 
-deps/libuv/.git : deps/libuv
-	@mkdir -p $<
-	cd deps ; git clone https://github.com/joyent/libuv.git
+#deps/libuv/.git : deps/libuv
+#	@mkdir -p $<
+#	cd deps ; git clone https://github.com/joyent/libuv.git
