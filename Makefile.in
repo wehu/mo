@@ -226,6 +226,7 @@ mo_SOURCES = src/main.cpp \
 SUBDIRS = deps/libuv
 INCLUDES = -Ideps/libuv/include -Isrc
 AM_CPPFLAGS = `pkg-config guile-2.0 --cflags`
+mo_DEPENDENCIES = deps/libuv/.git
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -1004,6 +1005,10 @@ uninstall-am: uninstall-binPROGRAMS
 	mostlyclean-generic pdf pdf-am ps ps-am tags tags-recursive \
 	uninstall uninstall-am uninstall-binPROGRAMS
 
+
+deps/libuv/.git : deps/libuv
+	@mkdir -p $<
+	cd deps ; git clone https://github.com/joyent/libuv.git
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
