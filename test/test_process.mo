@@ -21,4 +21,10 @@
 (display (process-get-file p))
 (display (process-get-args p))
 
+(require-mo "process" 'process)
+
+(process/popen2 `("echo" "hihihi")
+  (lambda (o) (display o))
+  (lambda (o) (display o)))
+
 (gc)

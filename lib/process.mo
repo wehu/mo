@@ -1,4 +1,4 @@
-(define process-popen2
+(define popen2
   (lambda (cmd stdout-cb stderr-cb)
     (let ((p (process-new))
           ;(in (pipe-new))
@@ -19,9 +19,9 @@
        (pipe-resume out)
        (pipe-resume err))))
 
-;(process-popen2 `("echo" "hi")
+;(popen2 `("echo" "hi")
 ;  (lambda (o) (display o))
 ;  (lambda (o) (display o)))
 
-(export-mo 'process-popen2)
+(export-mo 'popen2)
 
