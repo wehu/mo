@@ -1,0 +1,3 @@
+mo is an attemp to copy node.js's amazing architecture based on libuv and guile.
+
+This project is under heavy development.
