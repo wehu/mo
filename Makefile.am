@@ -11,6 +11,7 @@ mo_SOURCES = src/main.cpp \
              src/mo_stream.cpp \
              src/mo_pipe.cpp \
              src/mo_tcp.cpp \
+             src/mo_udp.cpp \
              src/mo_tty.cpp \
              src/mo_module.cpp \
              src/mo_utils.cpp

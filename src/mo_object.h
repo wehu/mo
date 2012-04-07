@@ -32,6 +32,7 @@ typedef std::map <std::string, std::vector<SCM> > event_map_t;
 
 union mo_any_handle {
   uv_tcp_t tcp;
+  uv_udp_t udp;
   uv_pipe_t pipe;
   uv_process_t process;
   uv_stream_t stream;

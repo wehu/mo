@@ -172,10 +172,10 @@ void TCP::RegisterSCMFunctions(){
   scm_c_define_gsubr("tcp-accept", 2, 0, 0, (void *)Accept);
 
   scm_c_define_gsubr("tcp-bind", 3, 0, 0, (void *)Bind);
-  scm_c_define_gsubr("tcp-bind6", 3, 0, 0, (void *)Bind);
+  scm_c_define_gsubr("tcp-bind6", 3, 0, 0, (void *)Bind6);
 
   scm_c_define_gsubr("tcp-connect", 4, 0, 0, (void *)Connect);
-  scm_c_define_gsubr("tcp-connect6", 4, 0, 0, (void *)Connect);
+  scm_c_define_gsubr("tcp-connect6", 4, 0, 0, (void *)Connect6);
 }
 
 void TCP::Init(){

@@ -1,2 +1,5 @@
 1. add udp binding
-2. add standard libs
+2. add fs binding
+3. review api binding
+4. add standard libs
+5. add more tests

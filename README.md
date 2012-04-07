@@ -8,14 +8,13 @@ This project is under heavy development.
 
 ## Build Instructions
 
-Download or clone source code from github:
+Download source code from github:
 
 	git clone git://github.com/wehu/mo.git
 	cd mo
 	./configure
 	make
-
-For more detial, see `INSTALL`.
+	make install
 
 ## Example
 
@@ -27,4 +26,7 @@ See `test/test_http.mo`:
 	  (lambda (req)
 	    "<b>hello world</b>")
 
+Run example:
+
+	mo test/test_http.mo
 

@@ -22,6 +22,7 @@
 #include <assert.h>
 #include "mo_logger.h"
 #include "mo_tcp.h"
+#include "mo_udp.h"
 #include "mo_pipe.h"
 
 using namespace std;
@@ -65,6 +66,7 @@ void Stream::OnConnection(uv_stream_t * server, int status){
   SCM c;
   switch(s->type){
     case MO_TCP: c = TCP::New(); break;
+    case MO_UDP: c = UDP::New(); break;
     default: c = Pipe::New();
   }
   assert(c!=NULL);

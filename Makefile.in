@@ -37,7 +37,7 @@ subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	depcomp install-sh missing
+	TODO depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -54,7 +54,8 @@ am_mo_OBJECTS = main.$(OBJEXT) mo_object.$(OBJEXT) mo.$(OBJEXT) \
 	mo_tick.$(OBJEXT) mo_timer.$(OBJEXT) mo_event.$(OBJEXT) \
 	mo_process.$(OBJEXT) mo_fs.$(OBJEXT) mo_logger.$(OBJEXT) \
 	mo_stream.$(OBJEXT) mo_pipe.$(OBJEXT) mo_tcp.$(OBJEXT) \
-	mo_tty.$(OBJEXT) mo_module.$(OBJEXT) mo_utils.$(OBJEXT)
+	mo_udp.$(OBJEXT) mo_tty.$(OBJEXT) mo_module.$(OBJEXT) \
+	mo_utils.$(OBJEXT)
 mo_OBJECTS = $(am_mo_OBJECTS)
 mo_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@
@@ -219,6 +220,7 @@ mo_SOURCES = src/main.cpp \
              src/mo_stream.cpp \
              src/mo_pipe.cpp \
              src/mo_tcp.cpp \
+             src/mo_udp.cpp \
              src/mo_tty.cpp \
              src/mo_module.cpp \
              src/mo_utils.cpp
@@ -344,6 +346,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mo_tick.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mo_timer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mo_tty.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mo_udp.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mo_utils.Po@am__quote@
 
 .cpp.o:
@@ -527,6 +530,20 @@ mo_tcp.obj: src/mo_tcp.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/mo_tcp.cpp' object='mo_tcp.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mo_tcp.obj `if test -f 'src/mo_tcp.cpp'; then $(CYGPATH_W) 'src/mo_tcp.cpp'; else $(CYGPATH_W) '$(srcdir)/src/mo_tcp.cpp'; fi`
+
+mo_udp.o: src/mo_udp.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mo_udp.o -MD -MP -MF $(DEPDIR)/mo_udp.Tpo -c -o mo_udp.o `test -f 'src/mo_udp.cpp' || echo '$(srcdir)/'`src/mo_udp.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mo_udp.Tpo $(DEPDIR)/mo_udp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/mo_udp.cpp' object='mo_udp.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mo_udp.o `test -f 'src/mo_udp.cpp' || echo '$(srcdir)/'`src/mo_udp.cpp
+
+mo_udp.obj: src/mo_udp.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mo_udp.obj -MD -MP -MF $(DEPDIR)/mo_udp.Tpo -c -o mo_udp.obj `if test -f 'src/mo_udp.cpp'; then $(CYGPATH_W) 'src/mo_udp.cpp'; else $(CYGPATH_W) '$(srcdir)/src/mo_udp.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/mo_udp.Tpo $(DEPDIR)/mo_udp.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='src/mo_udp.cpp' object='mo_udp.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o mo_udp.obj `if test -f 'src/mo_udp.cpp'; then $(CYGPATH_W) 'src/mo_udp.cpp'; else $(CYGPATH_W) '$(srcdir)/src/mo_udp.cpp'; fi`
 
 mo_tty.o: src/mo_tty.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT mo_tty.o -MD -MP -MF $(DEPDIR)/mo_tty.Tpo -c -o mo_tty.o `test -f 'src/mo_tty.cpp' || echo '$(srcdir)/'`src/mo_tty.cpp
