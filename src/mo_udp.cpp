@@ -284,6 +284,18 @@ void UDP::RegisterSCMFunctions(){
   scm_c_define_gsubr("udp-bind", 3, 0, 0, (void *)Bind);
   scm_c_define_gsubr("udp-bind6", 4, 0, 0, (void *)Bind6);
 
+  scm_c_define_gsubr("udp-set-membership", 4, 0, 0, (void *)SetMembership);
+  scm_c_define_gsubr("udp-set-multicast-loop", 2, 0, 0, (void *)SetMulticastLoop);
+  scm_c_define_gsubr("udp-set-multicast-ttl", 2, 0, 0, (void *)SetMulticastTTL);
+  scm_c_define_gsubr("udp-set-broadcast", 2, 0, 0, (void *)SetBroadcast);
+  scm_c_define_gsubr("udp-set-ttl", 2, 0, 0, (void *)SetTTL);
+
+  scm_c_define_gsubr("udp-send", 5, 0, 0, (void *)Send);
+  scm_c_define_gsubr("udp-send6", 5, 0, 0, (void *)Send6);
+
+  scm_c_define_gsubr("udp-receive", 1, 0, 0, (void *)Receive);
+  scm_c_define_gsubr("udp-stop-receive", 1, 0, 0, (void *)StopReceive);
+
 }
 
 void UDP::Init(){
