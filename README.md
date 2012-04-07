@@ -8,7 +8,14 @@ This project is under heavy development.
 
 ## Build Instructions
 
-See INSTALL.
+Download or clone source code from github:
+
+	git clone git://github.com/wehu/mo.git
+	cd mo
+	./configure
+	make
+
+For more detial, see `INSTALL`.
 
 ## Example
 
