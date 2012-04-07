@@ -17,7 +17,7 @@ mo_SOURCES = src/main.cpp \
 SUBDIRS = deps deps/libuv
 INCLUDES = -Ideps/libuv/include -Isrc
 AM_CPPFLAGS = `pkg-config guile-2.0 --cflags`
-LIBS = `pkg-config guile-2.0 --libs` deps/libuv/uv.a -lm -ldl -lrt -pthread
+LIBS = `pkg-config guile-2.0 --libs` deps/libuv/uv.a -lm -ldl -lrt -lpthread
 
 mo_LIB_DIR = ${libdir}/mo_modules
 
@@ -30,3 +30,4 @@ ${mo_LIB_DIR}:
 uninstall: uninstall-am
 	cd ${mo_LIB_DIR} && rm * -f
 
+clean : clean-am
