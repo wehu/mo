@@ -32,7 +32,11 @@
 namespace Mo {
 
 SCM Main::Run(){
-  uv_run(uv_default_loop());
+  int r = uv_run(uv_default_loop());
+  if(r) {
+    Logger::Err("uv_run failed! : %d", r);
+    return SCM_BOOL_F;
+  }
   return SCM_BOOL_T;
 }
 
