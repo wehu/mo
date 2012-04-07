@@ -1,4 +1,4 @@
-AC_INIT([mo], [0.1], [wei1.hu@amd.com], [mo], [http://mo.org/])
+AC_INIT([mo], [0.1], [huwei04@hotmail.com], [mo], [http://mo.org/])
 AC_PREREQ([2.59])
 AM_INIT_AUTOMAKE([1.10 no-define])
 PKG_CHECK_MODULES([GUILE], [guile-2.0])
