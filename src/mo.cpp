@@ -24,6 +24,7 @@
 #include "mo_process.h"
 #include "mo_pipe.h"
 #include "mo_tcp.h"
+#include "mo_udp.h"
 #include "mo_fs.h"
 #include "mo_tty.h"
 #include "mo_module.h"
@@ -46,6 +47,7 @@ void Main::RegisterSCMFunctions(){
   Process::RegisterSCMFunctions();
   Pipe::RegisterSCMFunctions();
   TCP::RegisterSCMFunctions();
+  UDP::RegisterSCMFunctions();
   FS::RegisterSCMFunctions();
   TTY::RegisterSCMFunctions();
 
@@ -69,6 +71,7 @@ void Main::Init(){
   Process::Init();
   Pipe::Init();
   TCP::Init();
+  UDP::Init();
   FS::Init();
   TTY::Init();
 
