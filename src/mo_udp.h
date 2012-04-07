@@ -28,6 +28,9 @@ class UDP : public Stream {
   static uv_udp_t * GetHandle(UDP * t);
   static UDP * GetUDP(uv_udp_t * handle);
 
+  static void OnSend(uv_udp_send_t* req, int status);
+  static void OnRecv(uv_udp_t *handle, ssize_t nread, uv_buf_t buf, struct sockaddr* addr, unsigned flags);
+
   static SCM Bind(SCM, SCM, SCM);
   static SCM Bind6(SCM, SCM, SCM, SCM);
 

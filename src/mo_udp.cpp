@@ -158,17 +158,105 @@ SCM UDP::SetTTL(SCM id, SCM ttl){
   return id;
 }
 
+void UDP::OnSend(uv_udp_send_t* req, int status){
+  assert(req!=NULL);
+  UDP * u = GetUDP((uv_udp_t *)(req->handle));
+  assert(u!=NULL);
+  u->Object::Run("send", scm_list_1(u->smob));
+  free(req);
+}
+
+void UDP::OnRecv(uv_udp_t *handle, ssize_t nread, uv_buf_t buf, struct sockaddr* addr, unsigned flags){
+  uv_err_t err = uv_last_error(uv_default_loop());
+  UDP * u = GetUDP(handle);
+  assert(u!=NULL);
+  if (nread > 0) {
+    u->Object::Run("receive", scm_list_1(Buf2List(buf, nread)));
+  } else if (nread < 0) {
+    if (err.code == UV_EOF) {
+      u->Object::Run("receiveend", SCM_EOL);
+      uv_close((uv_handle_t*)handle, OnClose);
+    }
+  };
+  free(buf.base);
+}
+
 SCM UDP::Send(SCM id, SCM data, SCM ip, SCM port, SCM cb){
-  
+  //CheckArgType(id, scm_integer_p, "udp-send", 1);
+  assert_object_type(id);
+  CheckArgType(data, scm_list_p, "udp-send", 2);
+  CheckArgType(ip, scm_string_p, "udp-send", 3);
+  CheckArgType(port, scm_integer_p, "udp-send", 4);
+  CheckArgType(cb, scm_procedure_p, "udp-send", 5);
+  UDP *u = (UDP*)get_object(id);
+  assert(u!=NULL);
+  char * i = scm_to_locale_string(ip);
+  int p = scm_to_int(port);
+  uv_udp_t * h = GetHandle(u);
+  u->Object::On("send", cb);
+  if(h && uv_is_writable((uv_stream_t *)h)) {
+    uv_udp_send_t * req = (uv_udp_send_t *)malloc(sizeof(uv_udp_send_t));
+    assert(req!=NULL);
+    uv_buf_t buf = List2Buf(data);
+    struct sockaddr_in addr;
+    addr = uv_ip4_addr(i, p);
+    int r = uv_udp_send(req, h, &buf, 1, addr, OnSend);
+    if(r) Logger::Err("uv_udp_send failed! : %d", r);
+  };
+  return id; 
 }
 
 SCM UDP::Send6(SCM id, SCM data, SCM ip, SCM port, SCM cb){
+  //CheckArgType(id, scm_integer_p, "udp-send6", 1);
+  assert_object_type(id);
+  CheckArgType(data, scm_list_p, "udp-send6", 2);
+  CheckArgType(ip, scm_string_p, "udp-send6", 3);
+  CheckArgType(port, scm_integer_p, "udp-send6", 4);
+  CheckArgType(cb, scm_procedure_p, "udp-send6", 5);
+  UDP *u = (UDP*)get_object(id);
+  assert(u!=NULL);
+  char * i = scm_to_locale_string(ip);
+  int p = scm_to_int(port);
+  uv_udp_t * h = GetHandle(u);
+  u->Object::On("send", cb);
+  if(h && uv_is_writable((uv_stream_t *)h)) {
+    uv_udp_send_t * req = (uv_udp_send_t *)malloc(sizeof(uv_udp_send_t));
+    assert(req!=NULL);
+    uv_buf_t buf = List2Buf(data);
+    struct sockaddr_in6 addr;
+    addr = uv_ip6_addr(i, p);
+    int r = uv_udp_send6(req, h, &buf, 1, addr, OnSend);
+    if(r) Logger::Err("uv_udp_send6 failed! : %d", r);
+  };
+  return id;
 }
 
 SCM UDP::Receive(SCM id){
+  //CheckArgType(id, scm_integer_p, "udp-send6", 1);
+  assert_object_type(id);
+  UDP *u = (UDP*)get_object(id);
+  assert(u!=NULL);
+  uv_udp_t * h = GetHandle(u);
+  if(h && uv_is_readable((uv_stream_t *)h)){
+    int r = uv_udp_recv_start(h,
+                  OnAlloc,
+                  OnRecv);
+    if(r) Logger::Err("uv_udp_recv_start failed! : %d", r);
+  };
+  return id;
 }
 
 SCM UDP::StopReceive(SCM id){
+  //CheckArgType(id, scm_integer_p, "udp-send6", 1);
+  assert_object_type(id);
+  UDP *u = (UDP*)get_object(id);
+  assert(u!=NULL);
+  uv_udp_t * h = GetHandle(u);
+  if(h && uv_is_readable((uv_stream_t *)h)){
+    int r = uv_udp_recv_stop(h);
+    if(r) Logger::Err("uv_udp_recv_stop failed! : %d", r);
+  }
+  return id;
 }
 
 UDP::UDP(){
