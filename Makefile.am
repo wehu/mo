@@ -16,5 +16,5 @@ mo_SOURCES = src/main.cpp \
              src/mo_utils.cpp
 SUBDIRS = deps/libuv
 INCLUDES = -Ideps/libuv/include -Isrc
-CPPFLAGS = `pkg-config guile-2.0 --cflags`
+AM_CPPFLAGS = `pkg-config guile-2.0 --cflags`
 LIBS = `pkg-config guile-2.0 --libs` deps/libuv/uv.a -lm -ldl -lrt -pthread
