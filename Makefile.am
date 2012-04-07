@@ -19,3 +19,7 @@ INCLUDES = -Ideps/libuv/include -Isrc
 AM_CPPFLAGS = `pkg-config guile-2.0 --cflags`
 LIBS = `pkg-config guile-2.0 --libs` deps/libuv/uv.a -lm -ldl -lrt -pthread
 
+install: install-am
+
+uninstall: uninstall-am
+
