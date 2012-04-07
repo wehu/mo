@@ -19,7 +19,14 @@ INCLUDES = -Ideps/libuv/include -Isrc
 AM_CPPFLAGS = `pkg-config guile-2.0 --cflags`
 LIBS = `pkg-config guile-2.0 --libs` deps/libuv/uv.a -lm -ldl -lrt -pthread
 
-install: install-am
+mo_LIB_DIR = ${libdir}/mo_modules
+
+install: install-am ${mo_LIB_DIR}
+	cp lib/* ${mo_LIB_DIR}
+
+${mo_LIB_DIR}:
+	${MKDIR_P} $@
 
 uninstall: uninstall-am
+	cd ${mo_LIB_DIR} && rm * -f
 
