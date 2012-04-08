@@ -10,4 +10,4 @@
 
 (gc)
 
-(set-timeout (lambda () (clear-timer id)) 2000)
+(set-timeout (lambda () (clear-timer id)) 4000)

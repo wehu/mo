@@ -30,6 +30,7 @@ namespace Mo {
 
 typedef std::map <std::string, std::vector<SCM> > event_map_t;
 
+// wrap all uv handle type
 union mo_any_handle {
   uv_tcp_t tcp;
   uv_udp_t udp;
@@ -47,29 +48,41 @@ union mo_any_handle {
 };
 
 class Object {
+  // mo_handle_t is a general subclass of any uv handle
   struct mo_handle_t {
     mo_any_handle uv_fields;
     Object * obj;
   };
   protected:
+  // event registry
   event_map_t events;
+  // handle
   mo_handle_t handle;
 
+  // get handle by object pointer
   static mo_any_handle * GetHandle(Object *);
+  // get object pointer by handle
   static Object * GetObject(mo_any_handle *);
 
+  // callback on close event
   static void OnClose(uv_handle_t *);
 
+  // indicate if create a smob object for this object
   bool with_smob;
 
   public:
+  // smob of this object for guile system
   SCM smob;
 
   Object();
   virtual ~Object();
+  // register event
   void On(std::string e, SCM cb);
+  // remove event
   void Remove(std::string e);
+  // notify event and callback will be run on next tick
   void Notify(std::string e, SCM args);
+  // run event callback immeditately
   void Run(std::string e, SCM args);
 };
 

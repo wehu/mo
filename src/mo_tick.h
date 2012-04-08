@@ -31,12 +31,14 @@ namespace Mo {
 class Tick {
 
   private:
+  // tick queue
   static std::queue<std::pair<SCM, SCM> > queue;
 
   static uv_prepare_t prepare_watcher;
   static uv_check_t   check_watcher;
   static uv_idle_t    spinner;
 
+  // run one tick
   static void RunOne();
 
   static void Prepare(uv_prepare_t* handle, int status);

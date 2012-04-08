@@ -117,7 +117,7 @@ void Stream::OnShutDown(uv_shutdown_t* req, int status){
 }
 
 SCM Stream::Resume(SCM id){
-  //CheckArgType(id, scm_integer_p, "stream-on", 1);
+  //CheckArgType(id, scm_integer_p, "stream-resume", 1);
   assert_object_type(id);
   Stream *s = (Stream*)get_object(id);
   assert(s!=NULL);

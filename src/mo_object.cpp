@@ -25,6 +25,7 @@ using namespace std;
 
 namespace Mo {
 
+// for smob
 struct mo_object_data {
   Object * obj;
 };
@@ -43,6 +44,7 @@ Object::Object(){
   with_smob = initialized;
 
   if(with_smob) {
+    // create a smob
     struct mo_object_smob * o = (struct mo_object_smob *)scm_gc_malloc(sizeof(struct mo_object_smob), "mo_object");
     assert(o!=NULL);
     o->data = NULL;
@@ -80,8 +82,8 @@ Object::~Object(){
     for(it2=q.begin(); it2!=q.end(); it2++)
       scm_gc_unprotect_object(*it2);
   }
-  //abandon_object(smob);
   if(with_smob) {
+    // abandon smob
     struct mo_object_smob * o = (struct mo_object_smob *)SCM_SMOB_DATA(smob);
     assert(o!=NULL);
     assert(o->data!=NULL);
@@ -137,6 +139,7 @@ static size_t free_object(SCM id){
   return 0;
 }
 
+// initialize smob type for mo object
 void init_mo_object_type(){
   object_tag = scm_make_smob_type("mo_object", sizeof(struct mo_object_smob));
   scm_set_smob_mark(object_tag, mark_object);
