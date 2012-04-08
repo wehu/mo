@@ -40,8 +40,8 @@ class UDP : public Stream {
   static SCM SetBroadcast(SCM, SCM);
   static SCM SetTTL(SCM, SCM);
 
-  static SCM Send(SCM, SCM, SCM, SCM, SCM);
-  static SCM Send6(SCM, SCM, SCM, SCM, SCM);
+  static SCM Send(SCM, SCM, SCM, SCM);
+  static SCM Send6(SCM, SCM, SCM, SCM);
 
   static SCM Receive(SCM);
   static SCM StopReceive(SCM);
