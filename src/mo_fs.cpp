@@ -44,7 +44,9 @@ void FS::OnFS(uv_fs_t * req){
       e = "undefined";
       break;
   };
-  e += (uint64_t)req;
+  char tmp[256];
+  sprintf(tmp, "%p", req);
+  e += tmp;
   fs_g->Run(e, args);
   uv_fs_req_cleanup(req);
 }
@@ -64,7 +66,9 @@ SCM FS::Open(SCM fn, SCM flags, SCM mode, SCM cb){
              OnFS);
   if(r) Logger::Err("uv_fs_open failed! : %d", r);
   string e = "open";
-  e += (uint64_t)req;
+  char tmp[256];
+  sprintf(tmp, "%p", req);
+  e += tmp;
   fs_g->On(e, cb);
   //uv_unref(uv_default_loop());
   return fn;
@@ -81,7 +85,9 @@ SCM FS::Close(SCM fd, SCM cb){
              OnFS);
   if(r) Logger::Err("uv_fs_close failed! : %d", r);
   string e = "close";
-  e += (uint64_t)req;
+  char tmp[256];
+  sprintf(tmp, "%p", req);
+  e += tmp;
   fs_g->On(e, cb);
   //uv_unref(uv_default_loop());
   return fd;
