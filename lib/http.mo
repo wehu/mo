@@ -24,7 +24,7 @@
       (lambda (l)
         (let* ((p (string-split l #\:))
                (k (string->header (car p)))
-               (v (string-join (cdr p))))
+               (v (string-join (cdr p) "")))
           (if (string<> v "")
             (hashq-set! t k v))))
       (cdr r))
@@ -64,8 +64,8 @@
         (tcp-on client "read"
           (lambda (data)
             (let ((req (parse-http-req (data->string data))))
-            (tcp-write client
-              (string->data (http-response (cb req (default-http-response))))))))
+              (tcp-write client
+                (string->data (http-response (cb req (default-http-response))))))))
         (tcp-on client "write"
           (lambda (arg)
             (display "response done\n")))
