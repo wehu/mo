@@ -2,10 +2,10 @@
 
 (define sleeping-q (make-hash-table))
 (define running-q (make-hash-table))
+(define stopped #f)
 
 (define (spawn body)
   (let ((f (fiber/new body)))
-  (display "a\n")
     (hashq-set! running-q f f)
     f))
 
@@ -26,12 +26,18 @@
 
 (define (run)
   (letrec ((r (lambda ()
-                (run-one)
-                  (next-tick r))))
+                (if (not stopped)
+                  (begin
+                    (run-one)
+                    (next-tick r))))))
     (next-tick r)))
+
+(define (stop)
+  (set! stopped #t))
 
 (export-mo 'run)
 (export-mo 'spawn)
 (export-mo 'sleep)
 (export-mo 'wake)
+(export-mo 'stop)
 
