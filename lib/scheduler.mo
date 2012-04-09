@@ -1,29 +1,39 @@
 (require-mo "fiber" 'fiber)
 
+;; sleeping queue
 (define sleeping-q (make-hash-table))
+
+;; running queue
 (define running-q (make-hash-table))
+
+;; stop flag
 (define stopped #f)
 
+;; spawn a new fiber into running queue
 (define (spawn body)
   (let ((f (fiber/new body)))
     (hashq-set! running-q f f)
     f))
 
+;; sleep a fiber
 (define (sleep f)
   (hashq-remove! running-q f)
   (hashq-set! sleeping-q f f)
   (fiber/yield f))
 
+;; wake up a fiber
 (define (wake f)
   (hashq-remove! sleeping-q f)
   (hashq-set! running-q f f))
 
+;; run a round
 (define (run-one)
   (hash-for-each
     (lambda (k v)
       (fiber/resume v))
     running-q))
 
+;; start scheduler
 (define (run)
   (letrec ((r (lambda ()
                 (if (not stopped)
@@ -32,6 +42,7 @@
                     (next-tick r))))))
     (next-tick r)))
 
+;; stop scheduler
 (define (stop)
   (set! stopped #t))
 
