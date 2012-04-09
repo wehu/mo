@@ -33,6 +33,9 @@ class TCP : public Stream {
   static SCM Connect(SCM, SCM, SCM, SCM);
   static SCM Connect6(SCM, SCM, SCM, SCM);
 
+//  static SCM GetSockName(SCM);
+//  static SCM GetPeerName(SCM);
+
   static SCM SetNoDelay(SCM, SCM);
   static SCM KeepAlive(SCM, SCM, SCM);
  

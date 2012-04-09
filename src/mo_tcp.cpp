@@ -146,6 +146,19 @@ SCM TCP::KeepAlive(SCM id, SCM enable, SCM delay){
   return id;
 }
 
+//SCM TCP::GetSockName(SCM id){
+//  //CheckArgType(id, scm_integer_p, "tcp-keep-alive", 1);
+//  assert_object_type(id);
+//  TCP * t = (TCP *)get_object(id);
+//  assert(t!=NULL);
+//  struct sockaddr* name = (struct sockaddr *)malloc(sizeof(struct sockaddr));
+//  int namelen;
+//  int r = uv_tcp_getsockname(GetHandle(t), name, &namelen);
+//  if(r) Logger::Err("uv_tcp_getsockname failed! : %d", r);
+//  SCM 
+//  free(name);
+//}
+
 TCP::TCP(){
   int r = uv_tcp_init(uv_default_loop(), (uv_tcp_t*)&handle);
   if(r) Logger::Err("uv_tcp_init failed! : %d", r);

@@ -65,9 +65,8 @@ void Stream::OnConnection(uv_stream_t * server, int status){
   assert(s!=NULL);
   SCM c;
   switch(s->type){
-    case MO_TCP: c = TCP::New(); break;
-    case MO_UDP: c = UDP::New(); break;
-    default: c = Pipe::New();
+    case MO_PIPE: c = Pipe::New(); break;
+    default: c = TCP::New();
   }
   assert(c!=NULL);
   uv_stream_t * client = GetHandle((Stream *)get_object(c));

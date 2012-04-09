@@ -54,7 +54,7 @@
 (tcp-bind server "0.0.0.0" 3000)
 (tcp-listen server 128 (lambda (o) (display o)))
 (define client (tcp-new))
-(tcp-connect client "0.0.0.0" 3000 (lambda (o) (display "try to connect\n")))
+(tcp-connect client "127.0.0.1" 3000 (lambda (o) (display "try to connect\n")))
 (tcp-write client `(1 2 3 4 5))
 (tcp-on client "write" (lambda (o) (tcp-destroy client)))
 
