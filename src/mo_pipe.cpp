@@ -176,7 +176,7 @@ void Pipe::RegisterSCMFunctions(){
   scm_c_define_gsubr("pipe-readable?", 1, 0, 0, (void *)IsReadable);
   scm_c_define_gsubr("pipe-writable?", 1, 0, 0, (void *)IsWritable);
 
-  scm_c_define_gsubr("pipe-listen", 3, 0, 0, (void *)Listen);
+  scm_c_define_gsubr("pipe-listen", 2, 0, 0, (void *)Listen);
   scm_c_define_gsubr("pipe-accept", 2, 0, 0, (void *)Accept);
 
   scm_c_define_gsubr("pipe-bind", 2, 0, 0, (void *)Bind);

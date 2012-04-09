@@ -274,7 +274,7 @@ void UDP::RegisterSCMFunctions(){
   scm_c_define_gsubr("udp-readable?", 1, 0, 0, (void *)IsReadable);
   scm_c_define_gsubr("udp-writable?", 1, 0, 0, (void *)IsWritable);
 
-  scm_c_define_gsubr("udp-listen", 3, 0, 0, (void *)Listen);
+  scm_c_define_gsubr("udp-listen", 2, 0, 0, (void *)Listen);
   scm_c_define_gsubr("udp-accept", 2, 0, 0, (void *)Accept);
 
   scm_c_define_gsubr("udp-bind", 3, 0, 0, (void *)Bind);

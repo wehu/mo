@@ -181,7 +181,7 @@ void TCP::RegisterSCMFunctions(){
   scm_c_define_gsubr("tcp-set-nodelay", 2, 0, 0, (void *)SetNoDelay);
   scm_c_define_gsubr("tcp-keep-alive", 3, 0, 0, (void *)KeepAlive);
 
-  scm_c_define_gsubr("tcp-listen", 3, 0, 0, (void *)Listen);
+  scm_c_define_gsubr("tcp-listen", 2, 0, 0, (void *)Listen);
   scm_c_define_gsubr("tcp-accept", 2, 0, 0, (void *)Accept);
 
   scm_c_define_gsubr("tcp-bind", 3, 0, 0, (void *)Bind);

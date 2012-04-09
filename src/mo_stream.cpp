@@ -220,11 +220,10 @@ SCM Stream::IsWritable(SCM id){
     return SCM_BOOL_F;
 }
 
-SCM Stream::Listen(SCM id, SCM backlog, SCM cb){
+SCM Stream::Listen(SCM id, SCM backlog){
   //CheckArgType(id, scm_integer_p, "stream-listen", 1);
   assert_object_type(id);
   CheckArgType(backlog, scm_integer_p, "stream-listen", 2);
-  CheckArgType(cb, scm_procedure_p, "stream-listen", 3);
   Stream *s = (Stream*)get_object(id);
   assert(s!=NULL);
   int bl = scm_to_int(backlog);

@@ -62,7 +62,7 @@ class Stream : public Object {
   static SCM IsReadable(SCM);
   static SCM IsWritable(SCM);
 
-  static SCM Listen(SCM, SCM, SCM);
+  static SCM Listen(SCM, SCM);
   static SCM Accept(SCM, SCM);
 
   static void RegisterSCMFunctions();

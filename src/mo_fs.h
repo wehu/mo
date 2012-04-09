@@ -28,6 +28,7 @@ class FS{
   private:
   static void OnFS(uv_fs_t * req);
   static SCM Open(SCM fn, SCM flags, SCM mode, SCM cb);
+  //static SCM Read(SCM fd, SCM cb);
   static SCM Close(SCM fd, SCM cb);
   public:
   FS();

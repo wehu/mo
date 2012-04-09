@@ -1,10 +1,15 @@
 ;(use-modules (web http))
 
 (define (data->string data)
-  (list->string (map (lambda (i) (integer->char i)) data)))
+  (list->string
+    (map
+      (lambda (i) (integer->char i))
+      data)))
 
 (define (string->data s)
-  (map (lambda (i) (char->integer i)) (string->list s)))
+  (map
+    (lambda (i) (char->integer i))
+    (string->list s)))
 
 (define (http-response resp)
   (string-append "HTTP/1.1 200 OK\nAccept-Ranges: bytes\nConnection: close\nContent-Length: "
@@ -18,15 +23,12 @@
       (lambda (client)
         (tcp-on client "read"
           (lambda (data)
-            ;(display (data->string data))
-            ;(display (http-response (cb (data->string data))))
             (tcp-write client (string->data (http-response (cb (data->string data)))))))
         (tcp-on client "write"
           (lambda (arg) (display "response done\n")))
         (tcp-resume client)))
     (tcp-bind server ip port)
-    (tcp-listen server 127
-      (lambda (o) (display o)))
+    (tcp-listen server 127)
     (display (string-append "http server start @ "
                          ip ":"
                          (number->string port) "\n"))))
