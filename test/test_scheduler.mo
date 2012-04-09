@@ -8,10 +8,13 @@
     (display "1\n")
     (s/sleep)
     (display "2\n")
-    (s/stop))))
+    (s/wake f2))))
 
 (set! f2 (s/spawn
   (lambda ()
-    (s/wake f1))))
+    (s/wake f1)
+    (s/sleep)
+    (display "3\n")
+    (s/stop))))
 
 (s/run)

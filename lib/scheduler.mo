@@ -23,13 +23,16 @@
 
 ;; wake up a fiber
 (define (wake f)
-  (hashq-remove! sleeping-q f)
-  (hashq-set! running-q f f))
+  (if (hashq-ref sleeping-q f)
+    (begin
+      (hashq-remove! sleeping-q f)
+      (hashq-set! running-q f f))))
 
 ;; run a round
 (define (run-one)
   (hash-for-each
     (lambda (k v)
+      (hashq-remove! running-q k)
       (fiber/resume v))
     running-q))
 
