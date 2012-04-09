@@ -17,7 +17,9 @@
 (define (parse-http-req req)
   (let ((t (make-hash-table))
         (r (string-split req #\newline)))
-    (hashq-set! t 'method (car r))
+    (let ((f (string-split (car r) #\space)))
+      (hashq-set! t 'method (car f))
+      (hashq-set! t 'uri (car (cdr f))))
     (map
       (lambda (l)
         (let* ((p (string-split l #\:))
