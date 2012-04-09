@@ -22,6 +22,7 @@
 #include "uv.h"
 #include <string>
 #include <map>
+#include <stack>
 
 // Mo
 namespace Mo {
@@ -30,9 +31,9 @@ typedef std::map<std::string, std::map<std::string, SCM> > export_map_t;
 
 class Module {
   private:
-  static SCM prefix;
+  static std::stack<SCM> prefix;
   static export_map_t exports;
-  static char * current_module_name;
+  static std::stack<std::string> current_module_name;
 
   static SCM Require(SCM, SCM);
   static SCM Export(SCM);

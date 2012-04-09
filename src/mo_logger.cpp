@@ -84,9 +84,6 @@ void Logger::RegisterSCMFunctions(){
   //scm_c_define_gsubr("info", 1, 0, 0, (void *)SCMInfo);
   //scm_c_define_gsubr("debug", 1, 0, 0, (void *)SCMDebug);
   scm_c_define_gsubr("register-source-location-function", 1, 0, 0, (void *)RegSocLocFunc);
-}
-
-void Logger::Init(){
   scm_c_eval_string("(read-enable 'positions)");
   scm_c_eval_string("(register-source-location-function \
                        (lambda (obj) \
@@ -105,6 +102,9 @@ void Logger::Init(){
                                  (display \"; \")) \
                              loc))) \
                          (display \"\\n\")))");
+}
+
+void Logger::Init(){
 }
 
 }
