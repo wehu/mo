@@ -3,9 +3,9 @@
 (define f (fiber/new
   (lambda ()
     (display "1\n")
-    (fiber/yield f)
+    (fiber/yield)
     (display "2\n")
-    (fiber/yield f)
+    (fiber/yield)
     (display "3\n"))))
 
 (fiber/resume f)

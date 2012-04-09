@@ -15,11 +15,11 @@
     (hashq-set! running-q f f)
     f))
 
-;; sleep a fiber
-(define (sleep f)
-  (hashq-remove! running-q f)
-  (hashq-set! sleeping-q f f)
-  (fiber/yield f))
+;; sleep current fiber
+(define (sleep)
+  (hashq-remove! running-q (fiber/current))
+  (hashq-set! sleeping-q (fiber/current) (fiber/current))
+  (fiber/yield))
 
 ;; wake up a fiber
 (define (wake f)
