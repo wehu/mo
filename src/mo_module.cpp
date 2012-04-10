@@ -38,9 +38,20 @@ static bool fexist(string filename){
 }
 
 void Module::LoadFile(void * fn){
-  string filename = (char *)fn;
+  char * filename = (char *)fn;
   Main::RegisterSCMFunctions();
-  //TODO add path searching
+  scm_c_primitive_load(filename);
+}
+
+SCM Module::Require(SCM fn, SCM p){
+  CheckArgType(fn, scm_string_p, "require-mo", 1);
+  CheckArgType(p, scm_symbol_p, "require-mo", 2);
+
+  prefix.push(scm_symbol_to_string(p));
+  scm_gc_protect_object(prefix.top());
+
+  string filename = (scm_to_locale_string(fn));
+  // TODO need an absolute path.
   if(fexist(filename)){
   } else {
     filename += ".mo";
@@ -53,17 +64,12 @@ void Module::LoadFile(void * fn){
       filename = string("/usr/lib/mo_modules/") + filename;
     } else if(fexist(string("/lib/mo_modules/") + filename)){
       filename = string("/lib/mo_modules/") + filename;
+    } else {
+      Logger::Err("can not find module \'%s\'\n", filename.c_str());
     }
-  }
-  scm_c_primitive_load(filename.c_str());
-}
+  };
 
-SCM Module::Require(SCM fn, SCM p){
-  CheckArgType(fn, scm_string_p, "require-mo", 1);
-  CheckArgType(p, scm_symbol_p, "require-mo", 2);
-  prefix.push(scm_symbol_to_string(p));
-  scm_gc_protect_object(prefix.top());
-  current_module_name.push(string(scm_to_locale_string(fn)));
+  current_module_name.push(filename);
   if(exports.find(current_module_name.top())==exports.end()){
     exports.insert(make_pair(current_module_name.top(), map<string, SCM>()));
     scm_c_define_module(current_module_name.top().c_str(),
@@ -82,9 +88,12 @@ SCM Module::Require(SCM fn, SCM p){
       scm_c_define(exp, scm_variable_ref(it->second));
     }
   }
+
   scm_gc_unprotect_object(prefix.top());
   prefix.pop();
+
   current_module_name.pop();
+
   return fn;
 }
 
