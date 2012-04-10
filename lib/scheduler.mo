@@ -6,6 +6,7 @@
 
 ;; running queue
 (define running-q (make-hash-table))
+(define running-q-args (make-hash-table))
 
 ;; stop flag
 (define stopped #f)
@@ -14,21 +15,24 @@
 (define (spawn body)
   (let ((f (fiber/new body)))
     (hashq-set! running-q f f)
+    (hashq-set! running-q-args f `())
     (hashq-set! f 'on `())
     f))
 
 ;; sleep current fiber
 (define (sleep)
   (hashq-remove! running-q (fiber/current))
+  (hashq-remove! running-q-args (fiber/current))
   (hashq-set! sleeping-q (fiber/current) (fiber/current))
   (fiber/yield))
 
 ;; wake up a fiber
-(define (wake f)
+(define (wake f . args)
   (if (hashq-ref sleeping-q f)
     (begin
       (hashq-remove! sleeping-q f)
-      (hashq-set! running-q f f))))
+      (hashq-set! running-q f f)
+      (hashq-set! running-q-args f args))))
 
 ;; join fibers
 (define (join . fs)
@@ -53,7 +57,8 @@
   (hash-for-each
     (lambda (k v)
       (hashq-remove! running-q k)
-      (fiber/resume v)
+      (apply fiber/resume (cons v (hashq-ref running-q-args k)))
+      (hashq-remove! running-q-args k)
       (for-each
         (lambda (f)
           (wake f))

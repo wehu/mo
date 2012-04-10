@@ -26,10 +26,10 @@
       ((hashq-ref cur 'cont)))))
 
 ;; resume fiber
-(define (resume f)
+(define (resume f . args)
   (hashq-set! f 'pre cur)
   (set! cur f)
-  ((hashq-ref f 'cont)))
+  (apply (hashq-ref f 'cont) args))
 
 ;; test alive
 (define (alive? f)

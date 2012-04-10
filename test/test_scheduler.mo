@@ -6,7 +6,7 @@
 (set! f1 (s/spawn
   (lambda ()
     (display "1\n")
-    (s/wake f2)
+    (s/wake f2 1 2)
     (s/sleep)
     (display "2\n")
     (s/wake f2))))
