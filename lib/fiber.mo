@@ -10,9 +10,11 @@
 (define (new body)
   (let ((o (make-hash-table)))
     (hashq-set! o 'pre cur)
+    (hashq-set! o 'alive #t)
     (hashq-set! o 'cont (lambda ()
       (reset
-        (body))))
+        (body)
+        (hashq-set! o 'alive #f))))
     o))
 
 ;; yield current fiber and return to previous fiber
@@ -29,7 +31,12 @@
   (set! cur f)
   ((hashq-ref f 'cont)))
 
+;; test alive
+(define (alive? f)
+  (hashq-ref f 'alive))
+
 (export-mo 'new)
 (export-mo 'current)
 (export-mo 'yield)
 (export-mo 'resume)
+(export-mo 'alive?)
