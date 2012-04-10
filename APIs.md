@@ -56,8 +56,8 @@ mo's module system is like node.js's. A mo file is a module. 'require-mo' is to 
   example:
 
 	(set-timeout (lambda ()
-	  (display "timeout\n")
-	  100))
+	  (display "timeout\n"))
+	  100)
 
   * (set-interval callback delay):
 
@@ -71,7 +71,8 @@ mo's module system is like node.js's. A mo file is a module. 'require-mo' is to 
 
 	(define timer (set-timeout
 	  (lambda ()
-	    (display "hi\n"))))
+	    (display "hi\n"))
+          1000))
 	(clear-timer timer)
 
 
