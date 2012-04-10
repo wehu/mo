@@ -11,9 +11,9 @@
   (let ((o (make-hash-table)))
     (hashq-set! o 'pre cur)
     (hashq-set! o 'alive #t)
-    (hashq-set! o 'cont (lambda ()
+    (hashq-set! o 'cont (lambda (. args)
       (reset
-        (body)
+        (apply body args)
         (hashq-set! o 'alive #f))))
     o))
 
