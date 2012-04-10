@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>MO by wehu</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/wehu/mo">Fork On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/wehu/mo/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/wehu/mo/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>MO</h1>
+          <p>mo is an attempt to copy node.js's architecture based on guile and libuv.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/wehu">wehu</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h2>Welcome to mo.</h2>
+
+<p>mo(re) = guile + libuv.</p>
+
+<p>mo is an attempt to copy node.js's architecture based on guile and libuv. On top of guile and libuv, have a fun to program in scheme in a platform like node.js. User will benefit from both scheme language features and asynchronous IO.</p>
+
+<p>This project is incomplete and under heavy development.</p>
+
+<h3>Example</h3>
+
+<pre><code>(require-mo "http" 'http)
+
+(http/start-server "0.0.0.0" 8080
+  (lambda (req resp)
+    (hashq-set! resp 'body "&lt;b&gt;hello world!&lt;/b&gt;")
+    resp)
+</code></pre>
+
+<h2>Features:</h2>
+
+<ul>
+<li>asynchronous IO by libuv</li>
+<li>scheme scripting for frontend </li>
+<li>node.js style module system</li>
+<li>ruby style fiber library</li>
+<li>fiber scheduler library in event loop</li>
+</ul><h2>APIs:</h2>
+
+<h3>Module system:</h3>
+
+<p>mo's module system is like node.js's. A mo file is a module. 'require-mo' is to load/evaluate file and 'export-mo' is to export functions in a module, so that other modules can access the functions.</p>
+
+<ul>
+<li>
+<p>(require-mo "module name" 'instance-name)</p>
+
+<p>'require-mo' loads module if it's not loaded before. The second argument is the instance name. It's used as export function's prefix. The functions exported by module will be like 'instance-name/foo'.</p>
+</li>
+<li>
+<p>(export-mo 'function)</p>
+
+<p>'export-mo' exports the functions in current module. </p>
+</li>
+</ul><p>example:</p>
+
+<p>file: <code>m1.mo</code></p>
+
+<pre><code>(define (foo)
+  (display "foo\n"))
+(export-mo 'foo)
+</code></pre>
+
+<p>file: <code>m2.mo</code></p>
+
+<pre><code>(require-mo "m1.mo" 'm)
+(m/foo)
+</code></pre>
+
+<h3>Tick:</h3>
+
+<ul>
+<li>
+<p>(next-tick callback):</p>
+
+<p>'next-tick' registers a callback into event loop. When event loop is free from IO activities, callback will be invoked.</p>
+</li>
+</ul><p>example:</p>
+
+<pre><code>(next-tick 
+  (lambda ()
+    (display "hi\n")))
+</code></pre>
+
+<h3>Timer:</h3>
+
+<ul>
+<li>
+<p>(set-timeout callback delay):</p>
+
+<p>'set-timeout' registers a timer. After time indicated by delay is out, callback will be invoked.</p>
+</li>
+</ul><p>example:</p>
+
+<pre><code>(set-timeout (lambda ()
+  (display "timeout\n"))
+  100)
+</code></pre>
+
+<ul>
+<li>
+<p>(set-interval callback delay):</p>
+
+<p>'set-interval' is like set-timeout, but the callback will be repeatly invoked after delay ms.</p>
+</li>
+<li>
+<p>(clear-timer id)</p>
+
+<p>set-timer/interval return a IP for timer reference. 'clear-timer' can be used to terminate the timer.</p>
+</li>
+</ul><p>example:</p>
+
+<pre><code>(define timer (set-timeout
+  (lambda ()
+    (display "hi\n"))
+      1000))
+(clear-timer timer)
+</code></pre>
+
+<h3>Process:</h3>
+
+<h3>More...</h3>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
